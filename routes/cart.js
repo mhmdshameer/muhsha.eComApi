@@ -50,18 +50,18 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
   }
 });
 
-// // //Get User Product .............
+// // //Get User Cart .............
 
-router.get("/find/:userId", async (req, res) => {
+router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
   try {
-    const cart = await Product.findOne({userId: req.params.userId});
+    const cart = await Cart.findOne({userId: req.params.userId});
     res.status(200).json(cart);
   } catch (err) {
     res.send(500).json(err);
   }
 });
 
-// Get All................
+// Get  All................
 
 router.get("/", verifyTokenAndAdmin,async (req,res)=>{
     try{
@@ -71,5 +71,7 @@ router.get("/", verifyTokenAndAdmin,async (req,res)=>{
         res.status(500).json(err)
     }
 })
+
+
 
 export default router;

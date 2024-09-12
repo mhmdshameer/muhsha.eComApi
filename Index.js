@@ -5,9 +5,13 @@ import userRoute from "./routes/user.js";
 import bodyParser from "body-parser";
 import authRoute from "./routes/auth.js";
 import productRoute from "./routes/product.js";
+import cartRoute from "./routes/cart.js";
+import orderRoute from "./routes/order.js"
+import StripeRoute from "./routes/stripe.js";
+import cors from "cors"
 
 const app = express();
-const port = 3000;
+const port = 5000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -25,9 +29,13 @@ async function connectDB() {
 
 connectDB();
 
-app.use("/api/user", userRoute);
-app.use("/api/auth", authRoute);
+app.use(cors())
+app.use("/api/users", userRoute);
+app.use("/api/auths", authRoute);
 app.use("/api/products", productRoute);
+app.use("/api/carts", cartRoute);
+app.use("/api/orders", orderRoute);
+app.use("/api/checkout", StripeRoute);
 
 app.listen(port, () => {
   console.log(`Server is running on port:${port}`);
